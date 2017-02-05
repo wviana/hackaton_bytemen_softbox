@@ -104,6 +104,7 @@ module.exports = Generator.extend({
       const basePath = 'src/main/java/com/softbox/generator';
       this._copyTpl(`java/${basePath}/domain/_domain.js`, `./${basePath}/domain/${upperCamel(tableName)}.java`, data);
       this._copyTpl(`java/${basePath}/resources/_resources.js`, `./${basePath}/resources/${upperCamel(tableName)}.java`, data);
+      this._copyTpl(`java/${basePath}/service/_resources.js`, `./${basePath}/service/${upperCamel(tableName)}.java`, data);
     }
   },
 
