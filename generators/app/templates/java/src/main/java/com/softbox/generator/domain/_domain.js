@@ -15,27 +15,25 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(name = "<%= table %>")
 public class <%=upperCamel(table) %> {
-	
-	
+
 	<% columns.forEach(function(column){ %>
-	
+
 		<% if (column.pk) { %>
-				@Id 
+				@Id
 				@GeneratedValue(strategy = GenerationType.IDENTITY)
 		<% } %>
-		
-		
+
 		<% if (column.is_nullable == 'NO') { %>
 				<%=`@NotNull(message = "O campo ${camelCase(column.column_name)} não pode ser nulo")`%>
 		<% } %>
-		
+
 		<% if (column.character_maximum_length != null) { %>
 				@Max(<%= column.character_maximum_length %>)
 		<% } %>
 
 		@JsonInclude(Include.NON_NULL)
-		<%= `${dbToJava(column.data_type)} ${camelCase(column.column_name)}` %> 
-		
+		<%= `${dbToJava(column.data_type)} ${camelCase(column.column_name)}` %>;
+
 		public <%=`${dbToJava(column.data_type)} get${upperCamel(column.column_name)}`%> () {
 			return <%= camelCase(column.column_name) %>;
 		}
@@ -43,6 +41,6 @@ public class <%=upperCamel(table) %> {
 		public void set<%=`${upperCamel(column.column_name)}(${dbToJava(column.data_type)} ${camelCase(column.column_name)}) {`%>
 			<%=`this.${camelCase(column.column_name)} = ${camelCase(column.column_name)}`%>;
 		}
-		
+
 	<% }); %>
 }
