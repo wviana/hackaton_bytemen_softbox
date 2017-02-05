@@ -102,6 +102,7 @@ module.exports = Generator.extend({
         this._copyTpl(`java/${basePath}/domain/_domain.js`, `./${basePath}/domain/${upperCamel(tableName)}.java`, data);
         this._copyTpl(`java/${basePath}/resources/_resources.js`, `./${basePath}/resources/${upperCamel(tableName)}.java`, data);
         this._copyTpl(`java/${basePath}/service/_service.js`, `./${basePath}/service/${upperCamel(tableName)}.java`, data);
+        this._copyTpl(`java/${basePath}/repository/_repository.js`, `./${basePath}/repository/${upperCamel(tableName)}.java`, data);
       }
 
       this._install();
