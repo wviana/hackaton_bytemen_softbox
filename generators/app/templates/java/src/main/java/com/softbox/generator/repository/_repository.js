@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.softbox.generator.domain.Pessoa;
 
 @Repository
-<%= 'public interface ${upperCamel(table)}Repository extends JpaRepository<${upperCamel(table)}, Long> {' %>
+<%= `public interface ${upperCamel(table)}Repository extends JpaRepository<${upperCamel(table)}, Long> {` %>
 
 }
