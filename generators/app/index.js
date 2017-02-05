@@ -86,15 +86,15 @@ module.exports = Generator.extend({
 
   _writingBack: function(data) {
     for (var dados in data) {
-      //setData(data[dados])
-      console.log(data[dados]);
-
-      this._copyTpl('java/src/main/java/com/softbox/generator/domain/_domain.js', './src/java/main/' + data[dados][0].table_name + '.java')
+      this._copyTpl('java/src/main/java/com/softbox/generator/domain/_domain.js', `./src/java/main/${dados}.java`, {
+        table: dados,
+        columns: data[dados]
+      });
     }
   },
   
-  _copyTpl: function (from, to) {
-    this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), this)
+  _copyTpl: function (from, to, dados) {
+    this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), dados);
   },
   
   _copy: function (from, to) {
