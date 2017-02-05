@@ -25,22 +25,22 @@ module.exports = Generator.extend({
       type: 'input',
       name: 'host',
       message: 'host',
-      default: '192.168.99.101'
+      default: 'localhost'
     }, {
       type: 'input',
       name: 'user',
       message: 'user',
-      default: 'root'
+      default: 'iceinvestimentos'
     }, {
       type: 'input',
       name: 'password',
       message: 'password',
-      default: 'root'
+      default: 'iceinvestimentos'
     }, {
       type: 'input',
       name: 'database',
       message: 'database',
-      default: 'teste'
+      default: 'hackathon'
     }, ];
 
     return this.prompt(prompts).then(function(props) {
@@ -100,12 +100,15 @@ module.exports = Generator.extend({
 
         const basePath = 'src/main/java/com/softbox/generator';
         this._copyTpl(`java/${basePath}/domain/_domain.js`, `./${basePath}/domain/${upperCamel(tableName)}.java`, data);
-        this._copyTpl(`java/${basePath}/resources/_resources.js`, `./${basePath}/resources/${upperCamel(tableName)}.java`, data);
-        this._copyTpl(`java/${basePath}/service/_service.js`, `./${basePath}/service/${upperCamel(tableName)}.java`, data);
-        this._copyTpl(`java/${basePath}/repository/_repository.js`, `./${basePath}/repository/${upperCamel(tableName)}.java`, data);
+        this._copyTpl(`java/${basePath}/resources/_resources.js`, `./${basePath}/resources/${upperCamel(tableName)}Resources.java`, data);
+        this._copyTpl(`java/${basePath}/service/_service.js`, `./${basePath}/service/${upperCamel(tableName)}Service.java`, data);
+        this._copyTpl(`java/${basePath}/repository/_repository.js`, `./${basePath}/repository/${upperCamel(tableName)}Repository.java`, data);
 
       }
-
+	
+      this._copy('java/src/main/java/com/softbox/GeneratorApplication.java', './src/main/java/com/softbox/GeneratorApplication.java');
+ 	  this._copy('java/src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java', './src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java');
+ 	  this._copy('java/src/main/resources/application.properties', './src/main/resources/application.properties');
       this._copy('java/.gitignore', './.gitignore');
       this._copy('java/build.gradle', './build.gradle');
       this._copy('java/gradlew', './gradlew');

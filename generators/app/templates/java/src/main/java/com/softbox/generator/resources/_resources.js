@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.softbox.generator.domain.Pessoa;
-import com.softbox.generator.service.PessoaService;
+import com.softbox.generator.domain.<%=upperCamel(table)%>;
+import com.softbox.generator.service.<%=upperCamel(table)%>Service;
 
 @RestController
 @RequestMapping("/<%= table %>")
@@ -30,18 +30,18 @@ public class <%=upperCamel(table)%>Resources {
 	private <%=upperCamel(table)%>Service <%=camelCase(table)%>Service;
 
 	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	<%=`public ResponseEntity<List<${upperCamel(table)}>> listar(){`%>
+	public ResponseEntity<List<<%=upperCamel(table)%>>> listar(){
 
 		return ResponseEntity.status(HttpStatus.OK).body(<%=camelCase(table)%>Service.listar());
 	}
 
 	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	<%=`public ResponseEntity<Void> salvar(@Valid @RequestBody ${upperCamel(table)} ${camelCase(table)}){`%>
+	public ResponseEntity<Void> salvar(@Valid @RequestBody <%=upperCamel(table)%> <%=camelCase(table)%>){
 
 		<%=`${camelCase(table)}.setId(null);`%>
 		<%=`${camelCase(table)} = ${camelCase(table)}Service.salvar(${camelCase(table)});`%>
 
-		<%=`URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(${camelCase(table)}.getId()).toUri();`%>
+		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(<%=camelCase(table)%>.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
@@ -63,7 +63,7 @@ public class <%=upperCamel(table)%>Resources {
 	}
 
 	@PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	<%=`public ResponseEntity<Void> atualizar(@RequestBody ${upperCamel(table)} ${camelCase(table)}, @PathVariable Long id){`%>
+	public ResponseEntity<Void> atualizar(@RequestBody <%=upperCamel(table)%> <%=camelCase(table)%>, @PathVariable Long id){
 
 		<%=`${camelCase(table)}.setId(id);`%>
 		<%= `${camelCase(table)}Service.atualizar(${camelCase(table)});` %>

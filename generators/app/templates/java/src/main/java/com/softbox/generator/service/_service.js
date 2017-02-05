@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.softbox.generator.domain.Pessoa;
-import com.softbox.generator.repository.PessoaRepository;
+import com.softbox.generator.domain.<%=upperCamel(table)%>;
+import com.softbox.generator.repository.<%=upperCamel(table)%>Repository;
 import com.softbox.generator.service.exception.RecursoNaoEncontradoException;
 
 @Service
@@ -16,12 +16,12 @@ public class <%=upperCamel(table)%>Service {
 	@Autowired
 	private <%=upperCamel(table)%>Repository <%=camelCase(table)%>Repository;
 
-	<%= `public List<${upperCamel(table)}> listar(){` %>
+	public List<<%=upperCamel(table)%>> listar(){
 
 		return <%=camelCase(table)%>Repository.findAll();
 	}
 
-	<%=`public ${upperCamel(table)} ${camelCase(table)}(Long id){`%>
+	<%=`public ${upperCamel(table)} buscar(Long id){`%>
 
 		<%=`${upperCamel(table)} ${camelCase(table)} = ${camelCase(table)}Repository.findOne(id);`%>
 

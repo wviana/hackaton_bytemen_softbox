@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,8 +24,8 @@ public class <%=upperCamel(table) %> {
 				@GeneratedValue(strategy = GenerationType.IDENTITY)
 		<% } %>
 
-		<% if (column.is_nullable == 'NO') { %>
-				<%=`@NotNull(message = "O campo ${camelCase(column.column_name)} não pode ser nulo")`%>
+		<% if (column.is_nullable == 'NO' && !column.pk) { %>
+				@NotNull(message = "O campo <%= camelCase(column.column_name) %> não pode ser nulo")
 		<% } %>
 
 		<% if (column.character_maximum_length != null) { %>

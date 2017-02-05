@@ -1,6 +1,6 @@
 module.exports = function() {
 	var toJavaTypes = {
-		"bigint": "long",
+		"bigint": "Long",
 		"bigserial": "long",
 		"boolean": "boolean",
 		"character": "String",
