@@ -1,19 +1,14 @@
 {
   "name": "generator-hackathon",
   "version": "0.0.0",
-  "description": "",
-  "homepage": "",
-  "author": {
-    "name": "Wesley Viana",
-    "email": "viana.wesley@gmail.com",
-    "url": ""
-  },
+  "description": ">",
+  "homepage": "https://github.com/wviana/generator-hackathon#readme",
+  "author": "Wesley Viana <viana.wesley@gmail.com>",
   "files": [
     "generators"
   ],
   "main": "generators/index.js",
   "keywords": [
-    "",
     "yeoman-generator"
   ],
   "dependencies": {
@@ -43,10 +38,20 @@
       "mocha": true
     }
   },
-  "repository": "wviana/generator-hackathon",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wviana/generator-hackathon.git"
+  },
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"
   },
-  "private": true
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/wviana/generator-hackathon/issues"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "license": "ISC"
 }
