@@ -50,10 +50,6 @@ module.exports = Generator.extend({
 
       this.pg = new DbClass(props.host, props.user, props.password, props.database);
 
-      this.pg.getSchema((res) => {
-        this._writingBack(res)
-      })
-
       this.features = props.features || [];
       this.projectName = props.project;
 
@@ -92,20 +88,24 @@ module.exports = Generator.extend({
 
     var upperCamel = (text) => changeCase.upperCaseFirst(changeCase.camelCase(text));
 
-    for (var tableName in schemas) {
-      const data = {
-        table: tableName,
-        columns: schemas[tableName],
-        dbToJava: dbToJava,
-        camelCase: changeCase.camelCase,
-        upperCamel: upperCamel
-      };
+    this.pg.getSchema((schemas) => {
+      for (var tableName in schemas) {
+        const data = {
+          table: tableName,
+          columns: schemas[tableName],
+          dbToJava: dbToJava,
+          camelCase: changeCase.camelCase,
+          upperCamel: upperCamel
+        };
 
-      const basePath = 'src/main/java/com/softbox/generator';
-      this._copyTpl(`java/${basePath}/domain/_domain.js`, `./${basePath}/domain/${upperCamel(tableName)}.java`, data);
-      this._copyTpl(`java/${basePath}/resources/_resources.js`, `./${basePath}/resources/${upperCamel(tableName)}.java`, data);
-      this._copyTpl(`java/${basePath}/service/_resources.js`, `./${basePath}/service/${upperCamel(tableName)}.java`, data);
-    }
+        const basePath = 'src/main/java/com/softbox/generator';
+        this._copyTpl(`java/${basePath}/domain/_domain.js`, `./${basePath}/domain/${upperCamel(tableName)}.java`, data);
+        this._copyTpl(`java/${basePath}/resources/_resources.js`, `./${basePath}/resources/${upperCamel(tableName)}.java`, data);
+        this._copyTpl(`java/${basePath}/service/_service.js`, `./${basePath}/service/${upperCamel(tableName)}.java`, data);
+      }
+
+      this._install();
+    });
   },
 
   _copyTpl: function(from, to, dados) {
@@ -116,7 +116,7 @@ module.exports = Generator.extend({
     this.fs.copy(this.templatePath(from), this.destinationPath(to))
   },
 
-  install: function() {
+  _install: function() {
     this.destinationRoot('./src/front');
     this.installDependencies({
       bower: false

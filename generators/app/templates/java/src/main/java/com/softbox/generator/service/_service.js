@@ -16,7 +16,7 @@ public class <%=upperCamel(table)%>Service {
 	@Autowired
 	private <%=upperCamel(table)%>Repository <%=camelCase(table)%>Repository;
 
-	<%= `public List<${upperCamel(table)}> listar(){` =>
+	<%= `public List<${upperCamel(table)}> listar(){` %>
 
 		return <%=camelCase(table)%>Repository.findAll();
 	}

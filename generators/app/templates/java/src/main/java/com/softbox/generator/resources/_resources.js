@@ -66,7 +66,7 @@ public class <%=upperCamel(table)%>Resources {
 	<%=`public ResponseEntity<Void> atualizar(@RequestBody ${upperCamel(table)} ${camelCase(table)}, @PathVariable Long id){`%>
 
 		<%=`${camelCase(table)}.setId(id);`%>
-		`${camelCase(table)}Service.atualizar(${camelCase(table)});`
+		<%= `${camelCase(table)}Service.atualizar(${camelCase(table)});` %>
 
 		return ResponseEntity.noContent().build();
 	}
