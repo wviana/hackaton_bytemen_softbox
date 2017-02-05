@@ -11,47 +11,47 @@ import com.softbox.generator.repository.PessoaRepository;
 import com.softbox.generator.service.exception.RecursoNaoEncontradoException;
 
 @Service
-public class PessoaService {
-	
-	@Autowired
-	private PessoaRepository pessoaRepository;
+public class <%=upperCamel(table)%>Service {
 
-	public List<Pessoa> listar(){
-		
-		return pessoaRepository.findAll();
+	@Autowired
+	private <%=upperCamel(table)%>Repository <%=camelCase(table)%>Repository;
+
+	'public List<${upperCamel(table)}> listar(){'
+
+		return <%=camelCase(table)%>Repository.findAll();
 	}
-	
-	public Pessoa buscar(Long id){
-		
-		Pessoa pessoa = pessoaRepository.findOne(id);
-		
-		if(pessoa == null){
-			
+
+	<%='public ${upperCamel(table)} ${camelCase(table)}(Long id){'%>
+
+		<%='${upperCamel(table)} ${camelCase(table)} = ${camelCase(table)}Repository.findOne(id);'%>
+
+		if(<%=camelCase(table)%> == null){
+
 			throw new RecursoNaoEncontradoException("Recurso não encontrado");
 		}
-		
-		return pessoa;
+
+		return <%=camelCase(table)%>;
 	}
-	
-	public Pessoa salvar(Pessoa pessoa){
-		
-		return pessoaRepository.save(pessoa);
+
+	<%='public ${upperCamel(table)} salvar(${upperCamel(table)} ${camelCase(table)}){'%>
+
+		<%='return ${camelCase(table)}Repository.save(${camelCase(table)});'%>
 	}
-	
+
 	public void deletar(Long id){
-		
+
 		try {
-			
-			pessoaRepository.delete(id);
+
+			<%='${camelCase(table)}Repository.delete(id);'%>
 		} catch (EmptyResultDataAccessException e) {
-			
+
 			throw new RecursoNaoEncontradoException("Recurso não encontrado");
 		}
 	}
-	
-	public void atualizar(Pessoa pessoa){
-		
-		this.buscar(pessoa.getId());
-		this.salvar(pessoa);
+
+	<%='public void atualizar(${upperCamel(table)} ${camelCase(table)}){'%>
+
+		this.buscar(<%=camelCase(table)%>.getId());
+		this.salvar(<%=camelCase(table)%>);
 	}
 }
