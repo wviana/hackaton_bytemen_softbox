@@ -2,7 +2,7 @@
 
 var _ = require('lodash')
 
-class PostgresDriver {
+module.exports = class PostgresDriver {
 	constructor(host, user, password, database) {
 		this.pg 	   = require('pg')
 
@@ -75,7 +75,3 @@ class PostgresDriver {
 		})
 	}
 }
-
-var pg = new PostgresDriver('192.168.99.101', 'root', 'root', 'teste')
-
-pg.getSchema((res) => console.log(res))
