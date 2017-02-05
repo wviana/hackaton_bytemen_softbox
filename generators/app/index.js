@@ -3,6 +3,7 @@
 var Generator = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var changeCase = require('change-case');
 
 module.exports = Generator.extend({
   prompting: function () {
@@ -85,10 +86,17 @@ module.exports = Generator.extend({
   },
 
   _writingBack: function(data) {
+    var dbToJava = require('../../helper/DbTypeConverter.js');
+
+    var upperCamel = (text) => changeCase.upperCaseFirst(changeCase.camelCase(text));
+
     for (var dados in data) {
       this._copyTpl('java/src/main/java/com/softbox/generator/domain/_domain.js', `./src/java/main/${dados}.java`, {
         table: dados,
-        columns: data[dados]
+        columns: data[dados],
+        dbToJava: dbToJava,
+        camelCase: changeCase.camelCase,
+        upperCamel: upperCamel
       });
     }
   },
