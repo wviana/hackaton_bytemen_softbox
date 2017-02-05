@@ -28,10 +28,6 @@ public class <%=upperCamel(table) %> {
 				@NotNull(message = "O campo <%= camelCase(column.column_name) %> não pode ser nulo")
 		<% } %>
 
-		<% if (column.character_maximum_length != null) { %>
-				@Max(<%= column.character_maximum_length %>)
-		<% } %>
-
 		@JsonInclude(Include.NON_NULL)
 		<%= `${dbToJava(column.data_type)} ${camelCase(column.column_name)}` %>;
 
