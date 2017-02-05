@@ -27,21 +27,21 @@ import com.softbox.generator.service.PessoaService;
 public class <%=upperCamel(table)%>Resources {
 
 	@Autowired
-	private <%=upperCamel(table)%>Service <%=upperCamel(table)%>Service;
+	private <%=upperCamel(table)%>Service <%=camelCase(table)%>Service;
 
 	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	<%='public ResponseEntity<List<${upperCamel(table)}>> listar(){'%>
 
-		return ResponseEntity.status(HttpStatus.OK).body(<%= camelCase(table) %>Service.listar());
+		return ResponseEntity.status(HttpStatus.OK).body(<%=camelCase(table)%>Service.listar());
 	}
 
 	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<Void> salvar(@Valid @RequestBody Pessoa pessoa){
+	<%='public ResponseEntity<Void> salvar(@Valid @RequestBody ${upperCamel(table)} ${camelCase(table)}){'%>
 
-		pessoa.setId(null);
-		pessoa = pessoaService.salvar(pessoa);
+		<%='${camelCase(table)}.setId(null);'%>
+		<%='${camelCase(table)} = ${camelCase(table)}Service.salvar(${camelCase(table)});'%>
 
-		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(pessoa.getId()).toUri();
+		<%='URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(${camelCase(table)}.getId()).toUri();'%>
 
 		return ResponseEntity.created(uri).build();
 	}
@@ -49,24 +49,24 @@ public class <%=upperCamel(table)%>Resources {
 	@GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<?> buscar(@PathVariable Long id){
 
-		Pessoa pessoa = pessoaService.buscar(id);
+		<%='${upperCamel(table)} ${camelCase(table)} = ${camelCase(table)}Service.buscar(id);'%>
 
-		return ResponseEntity.status(HttpStatus.OK).body(pessoa);
+		return ResponseEntity.status(HttpStatus.OK).body(<%=camelCase(table)%>);
 	}
 
 	@DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> deletar(@PathVariable Long id){
 
-		pessoaService.deletar(id);
+		<%='${camelCase(table)}Service.deletar(id);'%>
 
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<Void> atualizar(@RequestBody Pessoa pessoa, @PathVariable Long id){
+	<%='public ResponseEntity<Void> atualizar(@RequestBody ${upperCamel(table)} ${camelCase(table)}, @PathVariable Long id){'%>
 
-		pessoa.setId(id);
-		pessoaService.atualizar(pessoa);
+		<%='${camelCase(table)}.setId(id);'%>
+		'${camelCase(table)}Service.atualizar(${camelCase(table)});'
 
 		return ResponseEntity.noContent().build();
 	}
