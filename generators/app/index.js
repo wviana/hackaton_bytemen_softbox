@@ -23,19 +23,23 @@ module.exports = Generator.extend({
     }, {
       type: 'input',
       name: 'host',
-      message: 'host'
+      message: 'host',
+      default: '192.168.99.101'
     }, {
       type: 'input',
       name: 'user',
-      message: 'user'
+      message: 'user',
+      default: 'root'
     }, {
       type: 'input',
       name: 'password',
-      message: 'password'
+      message: 'password',
+      default: 'root'
     }, {
       type: 'input',
       name: 'database',
-      message: 'database'
+      message: 'database',
+      default: 'teste'
     },];
 
     return this.prompt(prompts).then(function (props) {
@@ -45,7 +49,7 @@ module.exports = Generator.extend({
 
       this.pg = new DbClass(props.host, props.user, props.password, props.database);
 
-      this.pg.getSchema((res) => console.log(res));
+      this.pg.getSchema((res) => {this._writingBack(res)})
     
       this.features = props.features || [];
       this.projectName = props.project;
@@ -57,7 +61,7 @@ module.exports = Generator.extend({
 	  
     }.bind(this));
   },
-  
+
   _configFeatures: function (possibleFeatures) {
     possibleFeatures.forEach(this._configFeature.bind(this))
   },
@@ -72,22 +76,21 @@ module.exports = Generator.extend({
   },
 
   writing: function () {
-	  this._copy('dummyfile.txt', 'dummyfile.txt');
-	  this._writingVue();
+	  //this._writingVue();
+    this._writingBack();
   },
   
   _writingVue: function() {
-    this._copyTpl('vue/_package.json', './src/front/package.json')
-    this._copyTpl('vue/_index.html', './src/front/index.html')
-    this._copyTpl('vue/_main.js', './src/front/src/main.js')
-    this._copyTpl('vue/_app.vue', './src/front/src/app.vue')
-    this._copyTpl('vue/_styles.css', './src/front/src/styles.css')
-    this._copyTpl('vue/_webpack.config.js', './src/front/webpack.config.js')
-    this._copyTpl('vue/_webpack.production.js', './src/front/webpack.production.js')
-    this._copy('vue/_gitignore', './src/front/.gitignore')
-    this._copy('vue/_babelrc', './src/front/.babelrc')
-    this._copy('vue/_eslintrc', './src/front/.eslintrc')
-    this._copy('vue/_editorconfig', './src/front/.editorconfig')
+    //this._copyTpl('vue/_package.json', './src/front/package.json')
+  },
+
+  _writingBack: function(data) {
+    for (var dados in data) {
+      //setData(data[dados])
+      console.log(data[dados]);
+
+      this._copyTpl('java/src/main/java/com/softbox/generator/domain/_domain.js', './src/java/main/' + data[dados][0].table_name + '.java')
+    }
   },
   
   _copyTpl: function (from, to) {

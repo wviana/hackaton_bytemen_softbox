@@ -23,11 +23,11 @@ import com.softbox.generator.domain.Pessoa;
 import com.softbox.generator.service.PessoaService;
 
 @RestController
-@RequestMapping("/<%= resource %>")
-public class <%= resource %>Resources {
+@RequestMapping("/pessoa")
+public class PessoaResources {
 	
 	@Autowired
-	private <%= resource %>Service pessoaService;
+	private PessoaService pessoaService;
 
 	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<List<Pessoa>> listar(){
