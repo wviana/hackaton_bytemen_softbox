@@ -69,8 +69,6 @@ module.exports = class PostgresDriver {
 				var schema = _.groupBy(result.rows, 'table_name')
 
 				onSuccess(schema)
-
-				process.exit(0)
 			})
 		})
 	}

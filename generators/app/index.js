@@ -3,7 +3,6 @@
 var Generator = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
-var PostgresDriver = require('../../helper/postgres.js')
 
 module.exports = Generator.extend({
   prompting: function () {
@@ -13,12 +12,12 @@ module.exports = Generator.extend({
     ));
 
     var prompts = [{
-      type: 'checkbox',
-      name: 'features',
+      type: 'list',
+      name: 'driver',
       message: 'Qual driver deseja utilizar?',
       choices: [{
         name: 'postgres',
-        value: '../../helper/postgres.js',
+        value: 'Postgres',
         checked: false
       }]
     }, {
@@ -42,13 +41,15 @@ module.exports = Generator.extend({
     return this.prompt(prompts).then(function (props) {
       this.props = props;
 
-      this.pg = new PostgresDriver(props.host, props.user, props.password, props.database);
+      var DbClass = require(`../../helper/${props.driver}Driver.js`)
+
+      this.pg = new DbClass(props.host, props.user, props.password, props.database);
 
       this.pg.getSchema((res) => console.log(res));
-	  
+    
       this.features = props.features || [];
       this.projectName = props.project;
-	  
+    
       this._configFeatures([
         'includeRouter',
         'includeVuestrap'
