@@ -105,10 +105,10 @@ module.exports = Generator.extend({
         this._copyTpl(`java/${basePath}/repository/_repository.js`, `./${basePath}/repository/${upperCamel(tableName)}Repository.java`, data);
 
       }
-	
+
       this._copy('java/src/main/java/com/softbox/GeneratorApplication.java', './src/main/java/com/softbox/GeneratorApplication.java');
- 	  this._copy('java/src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java', './src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java');
- 	  this._copy('java/src/main/resources/application.properties', './src/main/resources/application.properties');
+      this._copy('java/src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java', './src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java');
+      this._copy('java/src/main/resources/application.properties', './src/main/resources/application.properties');
       this._copy('java/.gitignore', './.gitignore');
       this._copy('java/build.gradle', './build.gradle');
       this._copy('java/gradlew', './gradlew');
