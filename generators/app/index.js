@@ -46,7 +46,7 @@ module.exports = Generator.extend({
     return this.prompt(prompts).then(function(props) {
       this.props = props;
 
-      var DbClass = require(`../../helper/${props.driver}Driver.js`)
+      const DbClass = require(`../../helper/${props.driver}Driver.js`)
 
       this.pg = new DbClass(props.host, props.user, props.password, props.database);
 
@@ -83,7 +83,7 @@ module.exports = Generator.extend({
     //this._copyTpl('vue/_package.json', './src/front/package.json')
   },
 
-  _writingBack: function(schemas) {
+  _writingBack: function() {
     var dbToJava = require('../../helper/DbTypeConverter.js');
 
     var upperCamel = (text) => changeCase.upperCaseFirst(changeCase.camelCase(text));
@@ -105,10 +105,12 @@ module.exports = Generator.extend({
         this._copyTpl(`java/${basePath}/repository/_repository.js`, `./${basePath}/repository/${upperCamel(tableName)}Repository.java`, data);
 
       }
-	
+
+      //Template Springboot application properties with database config
+      this._copyTpl('java/src/main/resources/_application.properties', './src/main/resources/application.properties', this.pg);
+
       this._copy('java/src/main/java/com/softbox/GeneratorApplication.java', './src/main/java/com/softbox/GeneratorApplication.java');
- 	  this._copy('java/src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java', './src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java');
- 	  this._copy('java/src/main/resources/application.properties', './src/main/resources/application.properties');
+      this._copy('java/src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java', './src/main/java/com/softbox/generator/service/exception/RecursoNaoEncontradoException.java');
       this._copy('java/.gitignore', './.gitignore');
       this._copy('java/build.gradle', './build.gradle');
       this._copy('java/gradlew', './gradlew');
