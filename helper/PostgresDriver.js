@@ -5,7 +5,9 @@ var _ = require('lodash')
 module.exports = class PostgresDriver {
 	constructor(host, user, password, database) {
 		this.pg 	   = require('pg')
-
+		this.hostname = host
+		this.username = user
+		this.password = password
 		this.conString = `postgres://${user}:${password}@${host}/${database}` // make sure to match your own database's credentials
 	}
 
@@ -15,9 +17,9 @@ module.exports = class PostgresDriver {
 				return console.error('error fetching client from pool', err)
 			}
 
-			var sql = 
+			var sql =
 				`WITH keys AS (
-				    SELECT    
+				    SELECT
 				    tc.table_name,
 				    tc.constraint_name,
 				    tc.constraint_type,
@@ -36,12 +38,12 @@ module.exports = class PostgresDriver {
 				    c.character_maximum_length,
 				    c.is_nullable,
 				    CASE
-				        WHEN fks.constraint_type = 'PRIMARY KEY' THEN TRUE 
-				        ELSE FALSE 
+				        WHEN fks.constraint_type = 'PRIMARY KEY' THEN TRUE
+				        ELSE FALSE
 				    END AS pk,
 				    CASE
-				        WHEN fks.constraint_type = 'FOREIGN KEY' THEN TRUE 
-				        ELSE FALSE 
+				        WHEN fks.constraint_type = 'FOREIGN KEY' THEN TRUE
+				        ELSE FALSE
 				    END AS fk,
 				    CASE c.table_name
 				        WHEN fks.fk_table THEN NULL
